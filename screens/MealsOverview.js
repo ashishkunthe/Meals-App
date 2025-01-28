@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f4f4f9",
+    backgroundColor: "#1c1c1c",
     padding: 10,
   },
   title: {

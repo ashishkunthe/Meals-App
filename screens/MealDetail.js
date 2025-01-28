@@ -1,14 +1,8 @@
-import {
-  Button,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MEALS } from "../data/dummy-data";
 import { useLayoutEffect } from "react";
 import IconButton from "../Components/IconButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function MealDetail({ route, navigation }) {
   const mealId = route.params.mealId;
@@ -17,59 +11,62 @@ function MealDetail({ route, navigation }) {
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
   function headerPressHandler() {
-    console.log("pressed");
+    console.log("Header button pressed!");
   }
 
-  useLayoutEffect(function () {
+  useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
-        return (
-          <IconButton icon="star" color="yellow" onPress={headerPressHandler} />
-        );
-      },
+      headerRight: () => (
+        <IconButton icon="star" color="#f5c518" onPress={headerPressHandler} />
+      ),
     });
-  }, []);
+  }, [navigation]);
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Meal Image */}
-      <Image style={styles.image} source={{ uri: selectedMeal.imageUrl }} />
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Meal Image */}
+        <Image style={styles.image} source={{ uri: selectedMeal.imageUrl }} />
 
-      <Text style={styles.title}>{selectedMeal.title}</Text>
+        <Text style={styles.title}>{selectedMeal.title}</Text>
 
-      {/* Meal Details */}
-      <View style={styles.details}>
-        <Text style={styles.detailText}>
-          Duration: {selectedMeal.duration} min
-        </Text>
-        <Text style={styles.detailText}>
-          Complexity: {selectedMeal.complexity.toUpperCase()}
-        </Text>
-        <Text style={styles.detailText}>
-          Affordability: {selectedMeal.affordability.toUpperCase()}
-        </Text>
-      </View>
-
-      {/* Ingredients */}
-      <Text style={styles.sectionTitle}>Ingredients</Text>
-      <View style={styles.listContainer}>
-        {selectedMeal.ingredients.map((ingredient, index) => (
-          <Text key={index} style={styles.listItem}>
-            {ingredient}
+        {/* Meal Details */}
+        <View style={styles.details}>
+          <Text style={styles.detailText}>
+            Duration: {selectedMeal.duration} min
           </Text>
-        ))}
-      </View>
-
-      {/* Steps */}
-      <Text style={styles.sectionTitle}>Steps</Text>
-      <View style={styles.listContainer}>
-        {selectedMeal.steps.map((step, index) => (
-          <Text key={index} style={styles.listItem}>
-            {index + 1}. {step}
+          <Text style={styles.detailText}>
+            Complexity: {selectedMeal.complexity.toUpperCase()}
           </Text>
-        ))}
-      </View>
-    </ScrollView>
+          <Text style={styles.detailText}>
+            Affordability: {selectedMeal.affordability.toUpperCase()}
+          </Text>
+        </View>
+
+        {/* Ingredients */}
+        <Text style={styles.sectionTitle}>Ingredients</Text>
+        <View style={styles.listContainer}>
+          {selectedMeal.ingredients.map((ingredient, index) => (
+            <Text key={index} style={styles.listItem}>
+              - {ingredient}
+            </Text>
+          ))}
+        </View>
+
+        {/* Steps */}
+        <Text style={styles.sectionTitle}>Steps</Text>
+        <View style={styles.listContainer}>
+          {selectedMeal.steps.map((step, index) => (
+            <Text key={index} style={styles.listItem}>
+              {index + 1}. {step}
+            </Text>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -77,50 +74,64 @@ export default MealDetail;
 
 // Styling
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#1c1c1c",
+  },
   container: {
     flex: 1,
-    padding: 20,
-    paddingBottom: 10,
-    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+  },
+  scrollContent: {
+    paddingBottom: 20, // Extra padding to ensure visibility
   },
   image: {
     width: "100%",
-    height: 200,
-    borderRadius: 10,
+    height: 250,
+    borderRadius: 12,
     marginBottom: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 8,
-    color: "#333",
+    marginVertical: 12,
+    color: "#f5f5f5",
   },
   details: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 8,
+    justifyContent: "space-around",
+    marginVertical: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "#444",
+    borderRadius: 8,
+    backgroundColor: "#2e2e2e",
   },
   detailText: {
     fontSize: 14,
-    color: "#666",
+    color: "#ccc",
     textAlign: "center",
-    flex: 1, // Allows equal spacing
+    fontWeight: "600",
+    width: 100,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    marginVertical: 0,
-    color: "#444",
+    marginVertical: 8,
+    color: "#f5c518",
   },
   listContainer: {
-    marginVertical: 8,
+    marginVertical: 20,
     paddingHorizontal: 8,
-    paddingBottom: 20,
+    paddingVertical: 20,
+    backgroundColor: "#2e2e2e",
+    borderRadius: 8,
   },
   listItem: {
     fontSize: 16,
-    marginVertical: 4,
-    color: "#555",
+    marginVertical: 6,
+    color: "#ddd",
+    lineHeight: 22,
   },
 });

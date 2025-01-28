@@ -15,7 +15,7 @@ function Meals({ item }) {
       <Pressable
         style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
         onPress={pressHandler}
-        android_ripple={{ color: "#ccc" }}
+        android_ripple={{ color: "#333" }}
       >
         <View>
           <Image style={styles.image} source={{ uri: item.imageUrl }} />
@@ -36,43 +36,44 @@ function Meals({ item }) {
 const styles = StyleSheet.create({
   mealContainer: {
     margin: 16,
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: "hidden",
-    backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 4, // Shadow for Android
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    elevation: 5, // Shadow for Android
+    backgroundColor: "#2e2e2e", // Dark gray for container background
+    color: "#fff",
   },
   pressable: {
     flex: 1,
   },
   pressed: {
-    opacity: 0.7, // Add visual feedback for presses
+    opacity: 0.9, // Add subtle visual feedback for presses
   },
   image: {
     width: 300,
     height: 200,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 8,
-    color: "#333",
+    marginVertical: 10,
+    color: "#f5f5f5", // Light color for title
   },
   infoContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 8,
-    backgroundColor: "#f8f8f8",
+    paddingVertical: 10,
+    backgroundColor: "#1c1c1c", // Darker gray for info background
   },
   infoText: {
     fontSize: 14,
-    color: "#666",
-    fontWeight: "600",
+    color: "#cccccc", // Light gray for info text
+    fontWeight: "500",
   },
 });
 
