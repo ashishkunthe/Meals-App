@@ -26,26 +26,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#1c1c1c", // Black background for the body
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#333",
+    color: "#f5f5f5", // Light gray for the title
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "#6200ee",
+    backgroundColor: "#333333", // Dark gray for the button
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    elevation: 3, // Shadow for Android
+    borderColor: "#444444", // Slightly lighter gray for the border
+    borderWidth: 1,
   },
   buttonPressed: {
-    backgroundColor: "#3700b2",
+    backgroundColor: "#555555", // Lighter gray when pressed
   },
   buttonText: {
-    color: "white",
+    color: "#f5f5f5", // Light gray for button text
     fontSize: 16,
     fontWeight: "600",
   },
