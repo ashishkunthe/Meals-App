@@ -1,26 +1,36 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MEALS } from "../data/dummy-data";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import IconButton from "../Components/IconButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { FavoritesContext } from "../store/context/FavoritesContext";
 
 function MealDetail({ route, navigation }) {
   const mealId = route.params.mealId;
-
-  // Find the selected meal based on the ID
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  function headerPressHandler() {
-    console.log("Header button pressed!");
+  const favoritesMealsCtx = useContext(FavoritesContext);
+  const mealIsFavorite = favoritesMealsCtx.ids.includes(mealId);
+
+  function changeFavoritesHandler() {
+    if (mealIsFavorite) {
+      favoritesMealsCtx.removeFavorite(mealId);
+    } else {
+      favoritesMealsCtx.addFavorite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <IconButton icon="star" color="#f5c518" onPress={headerPressHandler} />
+        <IconButton
+          icon={mealIsFavorite ? "star" : "star-outline"}
+          color="#f5c518"
+          onPress={changeFavoritesHandler}
+        />
       ),
     });
-  }, [navigation]);
+  }, [navigation, mealIsFavorite, changeFavoritesHandler]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
