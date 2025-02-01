@@ -4,19 +4,27 @@ import { useContext, useLayoutEffect } from "react";
 import IconButton from "../Components/IconButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FavoritesContext } from "../store/context/FavoritesContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFavorites,
+  getFav,
+  removeFavorites,
+} from "../store/redux/FavoritesSlice";
 
 function MealDetail({ route, navigation }) {
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  const favoritesMealsCtx = useContext(FavoritesContext);
-  const mealIsFavorite = favoritesMealsCtx.ids.includes(mealId);
+  // const favoritesMealsCtx = useContext(FavoritesContext);
+  const favoriteMealsIds = useSelector(getFav);
+  const dispatch = useDispatch();
+  const mealIsFavorite = favoriteMealsIds.includes(mealId);
 
   function changeFavoritesHandler() {
     if (mealIsFavorite) {
-      favoritesMealsCtx.removeFavorite(mealId);
+      dispatch(removeFavorites(mealId));
     } else {
-      favoritesMealsCtx.addFavorite(mealId);
+      dispatch(addFavorites(mealId));
     }
   }
 
